@@ -24,29 +24,22 @@ class Zone(models.Model):
         return self.name
 
     def zone_control(self, category):
-        towers_count = self.tower_set.count()
-        if towers_count == 1:
+        teams = self.teamzoneownership_set.filter(team__category=category, timestamp_end__isnull=True).values_list('team', flat=True)
+        # return Team.objects.filter(pk__in=teams)
+        return teams
+
+    def assign_to_team(self, team, handover_time=None):
+        if not handover_time:
+            handover_time = datetime.now(timezone.utc)
             try:
-                return [TeamTowerOwnership.objects.get(timestamp_end__isnull=True, team__category=category).team, ]
-            except TeamTowerOwnership.DoesNotExist as e:
-                return None
-            except TeamTowerOwnership.MultipleObjectsReturned:
-                # TODO: log this here, this should never happen
+                current_ownership = TeamZoneOwnership.objects.get(zone=self, timestamp_end__isnull=True, team__category=team.category)
+                current_ownership.timestamp_end = handover_time
+                current_ownership.save()
+                team.update_score(current_ownership)
+            except TeamZoneOwnership.DoesNotExist:
                 pass
-        elif towers_count > 1:
-            # this means that this zone has more than one tower
-            # the algorithm here is that all the teams that have the biggest number of towers under their control
-            # control the zone
 
-            team_stats = TeamTowerOwnership.objects.filter(timestamp_end__isnull=True, team__category=category)\
-                .values('team').annotate(tower_count=Count('tower'))
-
-            max_towers = max((stat['tower_count'] for stat in team_stats))
-            team_ids = (stat['team'] for stat in team_stats if stat['tower_count'] == max_towers)
-
-            # force list here to ensure compatibility with one team scenarios
-            teams = list(Team.objects.filter(pk__in=team_ids))
-            return teams
+            TeamZoneOwnership.objects.create(zone=self, team=team, timestamp_start=handover_time)
 
 
 class Tower(models.Model):
@@ -60,7 +53,7 @@ class Tower(models.Model):
     name = models.CharField(max_length=255)
     location = models.PointField()
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
-    category = models.PositiveSmallIntegerField()
+    category = models.PositiveSmallIntegerField(choices=CATEGORY_CHOICES)
     is_active = models.BooleanField()
     # TODO: add tower image
 
@@ -76,7 +69,39 @@ class Tower(models.Model):
         except TeamTowerOwnership.DoesNotExist:
             pass
 
-        return TeamTowerOwnership.objects.create(tower=self, team=team, timestamp_start=handover_time)
+        TeamTowerOwnership.objects.create(tower=self, team=team, timestamp_start=handover_time)
+
+        #   when towers are reassigned, recalculate zone assignments
+        zone_tower_count = Tower.objects.filter(zone=self.zone).count()
+        if zone_tower_count == 1:
+            #   for towers that control their zone on their own, this is straightforward
+            self.zone.assign_to_team(team=team, handover_time=handover_time)
+        elif zone_tower_count > 1:
+            #   for towers that share control of their zone with other towers, we need to
+            #   figure out more
+
+            #   get current zone owners
+            current_zone_control_teams = self.zone.zone_control(category=team.category)
+            #   recalculate maximum number of towers owned in zone
+            team_stats = TeamTowerOwnership.objects\
+                .filter(tower__zone=self.zone, timestamp_end__isnull=True, team__category=team.category)\
+                .values('team').annotate(tower_count=Count('tower'))
+
+            max_towers = max((stat['tower_count'] for stat in team_stats))
+            new_team_ids = (stat['team'] for stat in team_stats if stat['tower_count'] == max_towers)
+
+            #   remove old owners that are not in control anymore
+            to_remove = list(set(current_zone_control_teams) - set(new_team_ids))
+            to_close = TeamZoneOwnership.objects.filter(zone=self.zone, timestamp_end__isnull=True, team__in=to_remove)
+            for zone_ownership in to_close:
+                zone_ownership.timestamp_end = handover_time
+                zone_ownership.save()
+                zone_ownership.team.update_score(zone_ownership)
+
+            #   add new zone owners
+            to_add = list(set(new_team_ids) - set(current_zone_control_teams))
+            for team_id in to_add:
+                TeamZoneOwnership.objects.create(zone=self.zone, team=team_id, timestamp_start=handover_time)
 
     def get_next_challenge(self, team):
         # TODO: cooloff period? do we need this
@@ -119,6 +144,16 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+    def update_score(self, zone_ownership):
+        self.score += zone_ownership.get_score()
+        self.save()
+
+    def floating_score(self, when=datetime.now(timezone.utc)):
+        floating_score_current = 0
+        for zone_ownership in self.teamzoneownership_set.filter(timestamp_end__isnull=True):
+            floating_score_current += zone_ownership.get_score()
+        return floating_score_current
+
 
 class Challenge(models.Model):
     text = models.TextField(null=False, blank=False)
@@ -127,10 +162,12 @@ class Challenge(models.Model):
 
 
 class TeamTowerChallenge(models.Model):
+    PENDING = 0
     CONFIRMED = 1
     REJECTED = 2
 
     OUTCOME_CHOICES = [
+        (PENDING, "In asteptare"),
         (CONFIRMED, "Confirmat"),
         (REJECTED, "Respins")
     ]
@@ -140,8 +177,8 @@ class TeamTowerChallenge(models.Model):
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     timestamp_submitted = models.DateTimeField(auto_now_add=True)
     timestamp_verified = models.DateTimeField(null=True, blank=True)
-    outcome = models.PositiveSmallIntegerField(choices=OUTCOME_CHOICES, null=True, blank=True)
-    checked_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    outcome = models.PositiveSmallIntegerField(choices=OUTCOME_CHOICES, default=PENDING)
+    checked_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     response_text = models.TextField(null=True, blank=True)
     # TODO: add response image
 
@@ -155,6 +192,24 @@ class TeamTowerChallenge(models.Model):
             if self.outcome == TeamTowerChallenge.CONFIRMED:
                 self.tower.assign_to_team(self.team, self.challenge)
         super(TeamTowerChallenge, self).save(*args, **kwargs)
+
+
+class TeamZoneOwnership(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
+    timestamp_start = models.DateTimeField(auto_now_add=True)
+    timestamp_end = models.DateTimeField(null=True, blank=True)
+
+    def get_score(self, when=datetime.now(timezone.utc)):
+        ref_time = self.timestamp_end or when
+        score_time = (ref_time - self.timestamp_start).seconds
+        return self.zone.get_score(seconds=score_time)
+
+    def __str__(self):
+        data = (self.team, self.get_score(), self.zone)
+        if self.timestamp_end:
+            return "{} made {} points from zone {}".format(*data)
+        return "{} is making {} points from zone {}".format(*data)
 
 
 class TeamTowerOwnership(models.Model):
@@ -175,11 +230,10 @@ class TeamTowerOwnership(models.Model):
     def __str__(self):
         data = (self.team, self.tower, self.get_ownership_time())
         if self.timestamp_end:
-            return "{} owned {} for {}s".format(*data)
-        return "{} owns {} for {}s".format(*data)
+            return "{} owned tower {} for {}s".format(*data)
+        return "{} owns tower {} for {}s".format(*data)
 
     def save(self, *args, **kwargs):
         super(TeamTowerOwnership, self).save(*args, **kwargs)
         if self.__timestamp_end != self.timestamp_end and self.timestamp_end is not None:
-            #   tower ownership has finished, give team its points
-            self.team.score += self.tower.zone.final_score(self)
+            pass
