@@ -2,17 +2,19 @@ from django.contrib.gis.db import models
 from django.conf import settings
 from django.db.models import Count, Max
 from datetime import datetime, timezone
-
+import math
 
 class Zone(models.Model):
     SCORE_LOG = 1
     SCORE_EXP = 2
     SCORE_LIN = 3
+    SCORE_BONUS = 4
 
     ZONE_SCORING_CHOICES = [
         (SCORE_LOG, "Multe puncte la început, tot mai puține apoi"),
         (SCORE_EXP, "Putine puncte la început, tot mai multe apoi"),
-        (SCORE_LIN, "Puncte proportional cu posesia")
+        (SCORE_LIN, "Puncte proportional cu posesia"),
+        (SCORE_BONUS, "Putine punct la început, tot mai multe apoi (bonus)")
     ]
 
     name = models.CharField(max_length=255)
@@ -40,6 +42,33 @@ class Zone(models.Model):
                 pass
 
             TeamZoneOwnership.objects.create(zone=self, team=team, timestamp_start=handover_time)
+
+    def _get_score_exp(self, seconds):
+        mins = seconds / 60.
+        return min(math.pow(mins, 2) / 140, 200)
+
+    def _get_score_exp_bonus(self, seconds):
+        mins = seconds / 60.
+        return min(math.pow(mins, 2) / 25 + 50, 200)
+
+
+    def _get_score_log(self, seconds):
+        mins = seconds / 60.
+        return -12 * math.log(mins)
+
+    def _get_score_prop(self, seconds):
+        mins = seconds / 60.
+        return mins
+
+    def get_score(self, seconds):
+        score_functions = {
+            Zone.SCORE_EXP: self._get_score_exp,
+            Zone.SCORE_LOG: self._get_score_log,
+            Zone.SCORE_LIN: self._get_score_prop,
+            Zone.SCORE_BONUS: self._get_score_exp_bonus,
+        }
+
+        return score_functions[self.scoring_type](seconds)
 
 
 class Tower(models.Model):
