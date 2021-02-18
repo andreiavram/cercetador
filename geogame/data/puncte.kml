@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Propuneri puncte</name>
+    <Style id="icon-1899-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-0288D1-nodesc-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-0288D1-nodesc-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1899-0288D1-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0288D1-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-E65100-normal">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-E65100-highlight">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-E65100">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-E65100-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-E65100-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Placemark>
+      <name>Casă yeti (Magazie)
+</name>
+      <description><![CDATA[Cate laturi sunt in gard?<br>Lasa o carte la schimb in cutiuta de schimb carti de pe alee]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5766893,46.0664112,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Centrul Cercetășesc Alba Iulia</name>
+      <description><![CDATA[- chores de făcut în sediu - curățenie, dat zăpada, udat florile, other chores<br>- loc de încălzit și băut un ceai cald / stat la foc (?)<br>- lasat o scrisoare pt un coleg de patrula / lider? (cu un pix dintr-o parte si o hartie din alta)]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5435391,46.0733861,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Clubul tineretului (fostul sediu)</name>
+      <description><![CDATA[O scurta poveste cu ce se intampla demult aici si apoi o intrebare legat de textul ala (NFC?)<br>Cati ani a fost aici sediul cercetasilor? (e.g. diferenta dintre 2 ani)]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5833869,46.0717056,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Parcare Electrica (Loc de plecare in camp)</name>
+      <description><![CDATA[saluta cercetaseste cu rucsacul in spate in acest loc<br>Ce adunam in cutii inainte sa plecam in camp?<br>Selfie cu borcanul de zacusca]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5773469,46.0710603,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Cinema Dacia (Loc de plecare pe Mamut)</name>
+      <description>gaseste steagul/esarfa (pe balcon/geam). Poza cu un simbol cercetasesc</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5570326,46.0704413,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Catedrala Romano Catolica</name>
+      <description>Gaseste ceasul care zambeste la soare</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5698441,46.067558,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Piata Cetatii</name>
+      <description>Cati platani sunt in piata?</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5721488,46.0681386,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Piata tobosarului</name>
+      <description>Imita cat mai bine un tobosar (poza/video)</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5724814,46.0710342,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Gradinescu</name>
+      <description>Numeste 5 (10,15 in functie de ramura de varsta) plante ce le gasesti usor in natura si te ajuta sa fi sanatos</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.571996,46.0708648,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Stadion</name>
+      <description>Da o tura de stadion (culoar 8). Care e timpul tau?</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5667603,46.0787504,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Autogara</name>
+      <description><![CDATA[La ce ora trebuie sa te trezesti ca sa ajungi cat mai devreme la Rameti? (poza cumersul autobuzelor)<br>Cat costa un bilet dus-intors de Rameti?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5764123,46.0581705,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Vf. Mamut</name>
+      <description><![CDATA[Toponime de lucruri ce se vad de pe Mamut. (min 6)<br>gaseste izvoru<br>urmareste unul dintre traseele de pe harta de la sediu]]></description>
+      <styleUrl>#icon-1899-E65100</styleUrl>
+      <Point>
+        <coordinates>
+          23.5012227,46.0823825,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Panoramic</name>
+      <description>Cate locuri de parcare sunt?</description>
+      <styleUrl>#icon-1899-E65100</styleUrl>
+      <Point>
+        <coordinates>
+          23.5342484,46.0794404,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name><![CDATA[Framm's / Batthyaneum]]></name>
+      <description>In ce an s-a infintat biblioteca Batthyaneum si de catre cine</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5700513,46.0701174,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Palatul Copiilor</name>
+      <description>Transmiteti un mesaj de ziua cercetasilor </description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5719772,46.0665259,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>HCC</name>
+      <description><![CDATA[cate editii de UP au fost la HCC?<br>cati oameni au participat la ultima editie?              pentru teme: ce e aia u-pe?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5640036,46.0664688,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Skit</name>
+      <description>Cum se numea acest loc pe vremuri?                      Ce teren de sport e aici?</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5474565,46.0695908,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Mihai Eminescu (?)
+</name>
+      <description>filmulet cu 1 strofa dintr-o poezie de M.E</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5811271,46.0702941,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Trei măgari cu trei urechi
+</name>
+      <styleUrl>#icon-1899-0288D1-nodesc</styleUrl>
+      <Point>
+        <coordinates>
+          23.570307,46.067602,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Mihai Viteazu
+</name>
+      <description>De ce are calul lui MV un picior ridicat?</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5709443,46.0674834,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name><![CDATA["Motorul"
+]]></name>
+      <description>Ce reprezinta acest monument si cine l-a proiectat?</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5680287,46.0684307,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Alba Mall</name>
+      <description>Ce-a fost inainte de mall?                                           Cate editii OCF s-au desfasurat la Mall?</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5851296,46.0798337,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Parc si  fantana</name>
+      <description>Faceti rost de o poza mai veche de 10 ani cu acesta zona</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5655571,46.0690693,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>La Barieră
+</name>
+      <description>La ce ora trece trenul pe aici?/ la ce ora e coborata bariera?</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5950133,46.07138,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>pista biciclete</name>
+      <description>cat de lunga e pista? am vrea sa-i facem sa se plimbe pe pista</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.529461,46.0733623,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Dendroparc</name>
+      <description>Pozati 5 plante mai neobisnuite</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5381525,46.0818793,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Palatul copiilor</name>
+      <description>Numiti 5 chestii ce le poti invata aici</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5780614,46.069,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Piata</name>
+      <description>Cumparati o legatura de patrunjel                            Cati oameni sunt in piata?</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          23.5588427,46.0759276,0
+        </coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
