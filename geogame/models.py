@@ -19,7 +19,7 @@ class Zone(models.Model):
     ]
 
     name = models.CharField(max_length=255)
-    color = ColorField(default="#000000")
+    color = ColorField(default="#000000", max_length=18)
     scoring_type = models.PositiveSmallIntegerField(choices=ZONE_SCORING_CHOICES)
     shape = models.PolygonField(null=True, blank=True)
 
