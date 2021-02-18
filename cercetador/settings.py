@@ -25,7 +25,7 @@ SECRET_KEY = '+%qrqv+(+dg#o0myc5-wnj)@!ywf9-agl*r(ug8r!xeeo3!!8v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'cercetador.albascout.ro']
 
 
 # Application definition
