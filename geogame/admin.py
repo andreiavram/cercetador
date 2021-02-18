@@ -49,7 +49,8 @@ class TeamAdmin(admin.ModelAdmin):
 
 
 class ChallengeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['__str__', 'tower', 'difficulty']
+    list_filter = ['tower']
 
 
 class TeamTowerChallangeAdmin(admin.ModelAdmin):

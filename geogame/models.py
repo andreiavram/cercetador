@@ -1,3 +1,4 @@
+from colorfield.fields import ColorField
 from django.contrib.gis.db import models
 from django.conf import settings
 from django.db.models import Count, Max
@@ -18,7 +19,7 @@ class Zone(models.Model):
     ]
 
     name = models.CharField(max_length=255)
-    color = models.CharField(max_length=6)
+    color = ColorField(default="#000000")
     scoring_type = models.PositiveSmallIntegerField(choices=ZONE_SCORING_CHOICES)
     shape = models.PolygonField(null=True, blank=True)
 
@@ -153,6 +154,12 @@ class Tower(models.Model):
         # Returning toughest challenge for now
         return Challenge.objects.filter(tower__isnull=True).order_by("-difficulty").first()
 
+    def tower_control(self, category):
+        try:
+            TeamTowerOwnership.objects.get(timestamp_end__isnull=True, tower=self, team__category=category).team
+        except TeamTowerOwnership.DoesNotExist:
+            return None
+
 
 class Team(models.Model):
     EXPLORATORI = 1
@@ -189,6 +196,10 @@ class Challenge(models.Model):
     tower = models.ForeignKey(Tower, null=True, blank=True, on_delete=models.CASCADE)
     difficulty = models.PositiveSmallIntegerField(default=1)
 
+    def __str__(self):
+        if self.tower:
+            return "(Turn {}) {}".format(self.tower, self.text)
+        return self.text
 
 class TeamTowerChallenge(models.Model):
     PENDING = 0
