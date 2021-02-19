@@ -1,7 +1,7 @@
 let button = document.getElementById("rules")
 button.addEventListener("click", function (e) {
     console.log("triggered");
-    window.location.href = "https://google.com";
+    window.location.href = "https://docs.google.com/document/d/e/2PACX-1vQJZXyCAOQXdnxLFDDcWMsXWKgvsjs1uQY6MbgeWHdKR466KPYF1AAkbirT2oOXsJvkv4GMshoa2OGK/pub";
 })
 
 let map = L.map('map').setView([46.06549996715349, 23.570670843267617], 14);
