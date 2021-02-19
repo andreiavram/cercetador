@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from geogame.models import Zone, Tower, Team, Challenge, TeamTowerChallenge, TeamTowerOwnership
 
 
-class ZoneAdmin(admin.ModelAdmin):
+class ZoneAdmin(LeafletGeoAdmin):
     list_display = ['__str__', 'scoring_type', 'color', 'get_zone_control']
 
     def get_zone_control(self, instance):

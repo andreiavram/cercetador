@@ -85,7 +85,10 @@ class Tower(models.Model):
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE)
     category = models.PositiveSmallIntegerField(choices=CATEGORY_CHOICES)
     is_active = models.BooleanField()
-    # TODO: add tower image
+
+    rfid_code = models.CharField(max_length=16, null=True, blank=True
+
+                                 )
 
     def __str__(self):
         return self.name
