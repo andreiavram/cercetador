@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+
+from geogame.models import Team
 from geogame.views import ZoneViewSet, TowerViewSet, TeamViewSet, ChallengeViewSet, MapView, RFIDTowerView, \
-    TowerChallengeView
+    TowerChallengeView, ScoreMapView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -31,6 +33,9 @@ router.register(r'challenges', ChallengeViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', MapView.as_view()),
+    path('explo/', ScoreMapView.as_view(), {"category": Team.EXPLORATORI}),
+    path('temerari/', ScoreMapView.as_view(), {"category": Team.TEMERARI}),
+    path('seniori/', ScoreMapView.as_view(), {"category": Team.SENIORI}),
     path('tower/rfid/<str:rfid_code>/', RFIDTowerView.as_view(), name='tower-rfid'),
     path('tower/challenge/', TowerChallengeView.as_view(), name='tower-challenge'),
     path('api/', include(router.urls)),

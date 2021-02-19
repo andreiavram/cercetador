@@ -46,12 +46,11 @@ class Zone(models.Model):
 
     def _get_score_exp(self, seconds):
         mins = seconds / 60.
-        return min(math.pow(mins, 2) / 140, 200)
+        return math.pow(mins, 2) / 140
 
     def _get_score_exp_bonus(self, seconds):
         mins = seconds / 60.
         return min(math.pow(mins, 2) / 25 + 50, 200)
-
 
     def _get_score_log(self, seconds):
         mins = seconds / 60.

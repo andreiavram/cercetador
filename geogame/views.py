@@ -1,3 +1,4 @@
+from django.db.models import Count, Q
 from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView
 from rest_framework import viewsets
@@ -8,9 +9,12 @@ from geogame.serializers import ZoneSerializer, TowerSerializer, TeamSerializer,
 
 
 class ZoneViewSet(viewsets.ModelViewSet):
-    queryset = Zone.objects.exclude(tower__is_active=False)
+    queryset = Zone.objects.all()
     serializer_class = ZoneSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Zone.objects.annotate(num_towers=Count('tower', Q(tower__is_active=True))).filter(num_towers__gte=1)
 
 
 class TowerViewSet(viewsets.ModelViewSet):
@@ -33,6 +37,16 @@ class ChallengeViewSet(viewsets.ModelViewSet):
 
 class MapView(TemplateView):
     template_name = "geogame/map.html"
+
+
+class ScoreMapView(TemplateView):
+    template_name = "geogame/map_score.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ScoreMapView, self).get_context_data(**kwargs)
+
+        context['team_category'] = self.kwargs.get("category", Team.EXPLORATORI)
+        return context
 
 
 class RFIDTowerView(DetailView):

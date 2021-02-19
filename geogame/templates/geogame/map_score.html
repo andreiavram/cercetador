@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cercetador!</title>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+    <style>
+        html, body, #map {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #rules {
+            font-weight: bold;
+            font-size: 1em;
+            padding: 10px;
+            border-radius: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 400;
+        }
+
+    </style>
+</head>
+<body>
+    <div id = "map"></div>
+    <div><button id="rules">Reguli</button></div>
+    <div data-team-category="{{ team_category }}" id = "category"></div>
+
+<script src="{% static 'js/map_control_score.js' %}"></script>
+</body>
+</html>
