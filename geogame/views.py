@@ -41,3 +41,8 @@ class RFIDTowerView(DetailView):
 
     def get_object(self, queryset=None):
         return Tower.objects.get(rfid_code=self.kwargs.get("rfid_code"))
+
+
+class TowerChallengeView(TemplateView):
+    template_name = "geogame/tower_challenge.html"
+
