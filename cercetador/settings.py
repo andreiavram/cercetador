@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
 
+    'leaflet',
     'rest_framework',
     'rest_framework_gis',
     'colorfield',
@@ -138,6 +139,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (46.066, 23.576),
+    'DEFAULT_ZOOM': 14,
 }
 
 try:

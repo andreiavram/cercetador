@@ -1,4 +1,5 @@
 from django.contrib import admin
+from leaflet.admin import LeafletGeoAdmin
 
 # Register your models here.
 from django.utils.safestring import mark_safe
@@ -23,7 +24,7 @@ class ZoneAdmin(admin.ModelAdmin):
     get_zone_control.short_description = "Controlled by"
 
 
-class TowerAdmin(admin.ModelAdmin):
+class TowerAdmin(LeafletGeoAdmin):
     list_display = ['__str__', 'is_active', 'zone', 'category', 'get_tower_control']
     list_filter = ['zone', 'is_active', 'category']
 
