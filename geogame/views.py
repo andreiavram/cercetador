@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from rest_framework import viewsets
 from rest_framework import permissions
 
@@ -35,5 +35,9 @@ class MapView(TemplateView):
     template_name = "geogame/map.html"
 
 
-class RFIDTowerView(TemplateView):
+class RFIDTowerView(DetailView):
     template_name = "geogame/tower_rfid.html"
+    model = Tower
+
+    def get_object(self, queryset=None):
+        return Tower.objects.get(rfid_code=self.kwargs.get("rfid_code"))
