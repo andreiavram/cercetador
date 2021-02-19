@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.urls import reverse
+from django.conf import settings
 from leaflet.admin import LeafletGeoAdmin
 
 # Register your models here.
@@ -25,8 +27,9 @@ class ZoneAdmin(LeafletGeoAdmin):
 
 
 class TowerAdmin(LeafletGeoAdmin):
-    list_display = ['__str__', 'is_active', 'zone', 'category', 'get_tower_control']
+    list_display = ['__str__', 'is_active', 'zone', 'category', 'get_tower_control', 'get_rfid_url']
     list_filter = ['zone', 'is_active', 'category']
+    # readonly_fields = ['rfid_code']
 
     def get_tower_control(self, instance):
         output = "<ul>"
@@ -42,6 +45,13 @@ class TowerAdmin(LeafletGeoAdmin):
 
     get_tower_control.allow_tags = True
     get_tower_control.short_description = "Controlled by"
+
+    def get_rfid_url(self, obj):
+        if obj.category == Tower.CATEGORY_RFID:
+            return settings.BASE_URL + reverse('tower-rfid', kwargs={"rfid_code": obj.rfid_code})
+        return "-"
+
+    get_rfid_url.short_description = "RFID URL"
 
 
 class TeamAdmin(admin.ModelAdmin):

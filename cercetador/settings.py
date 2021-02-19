@@ -146,6 +146,8 @@ LEAFLET_CONFIG = {
     'DEFAULT_ZOOM': 14,
 }
 
+BASE_URL = "http://127.0.0.1:8000/"
+
 try:
     from .local_settings import *
 except ImportError:

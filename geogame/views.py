@@ -33,3 +33,7 @@ class ChallengeViewSet(viewsets.ModelViewSet):
 
 class MapView(TemplateView):
     template_name = "geogame/map.html"
+
+
+class RFIDTowerView(TemplateView):
+    template_name = "geogame/tower_rfid.html"
