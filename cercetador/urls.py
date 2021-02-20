@@ -34,9 +34,9 @@ router.register(r'team_tower_challenges', TeamTowerChallengeViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', MapView.as_view()),
-    path('explo/', ScoreMapView.as_view(), {"category": Team.EXPLORATORI}),
-    path('temerari/', ScoreMapView.as_view(), {"category": Team.TEMERARI}),
-    path('seniori/', ScoreMapView.as_view(), {"category": Team.SENIORI}),
+    path('explo/', ScoreMapView.as_view(), {"category": Team.EXPLORATORI}, name="score-map-explo"),
+    path('temerari/', ScoreMapView.as_view(), {"category": Team.TEMERARI}, name="score-map-teme"),
+    path('seniori/', ScoreMapView.as_view(), {"category": Team.SENIORI}, name="score-map-seniori"),
     path('tower/<int:pk>/', TowerDetailView.as_view(), name='tower-detail'),
     path('tower/rfid/<str:rfid_code>/', RFIDTowerView.as_view(), name='tower-rfid'),
     path('tower/challenge/', TowerChallengeView.as_view(), name='tower-challenge'),
