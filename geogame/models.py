@@ -135,7 +135,7 @@ class Tower(models.Model):
                 for team_id in to_add:
                     TeamZoneOwnership.objects.create(zone=self.zone, team_id=team_id, timestamp_start=handover_time)
 
-    def assign_to_team(self, team, challenge):
+    def assign_to_team(self, team, challenge=None):
         handover_time = datetime.now(timezone.utc)
         try:
             ownership = TeamTowerOwnership.objects.exclude(team=team)\
