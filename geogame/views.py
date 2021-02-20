@@ -99,11 +99,16 @@ class RFIDChallengeView(FormView):
     form_class = RFIDTowerForm
 
     def form_valid(self, form):
+        tower = form.cleaned_data['rfid_code']
+        team = form.cleaned_data['team_code']
+
+        #   creat TTC to be compliant
         ttc = TeamTowerChallenge.objects.create(tower=form.cleaned_data['rfid_code'],
-                                                team=form.cleaned_data['team_code'])
-        ttc = TeamTowerChallenge.objects.get(id=ttc.id)
-        ttc.outcome = TeamTowerChallenge.CONFIRMED
-        ttc.save()
+                                                team=form.cleaned_data['team_code'],
+                                                outcome=TeamTowerChallenge.CONFIRMED)
+
+        #   assign tower to team
+        tower.assign_to_team(team)
         return HttpResponseRedirect("{}?team={}".format(reverse("tower-rfid", kwargs={"rfid_code": ttc.tower.rfid_code}), ttc.team.id))
 
 
