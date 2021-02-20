@@ -16,6 +16,7 @@ class ZoneAdmin(LeafletGeoAdmin):
         output = "<ul>"
         for option, title in Team.CATEGORY_CHOICES:
             zone_control_teams = instance.zone_control(option)
+            zone_control_teams = Team.objects.filter(pk__in=zone_control_teams)
             output += "<li>{}: {}</li>\n".format(title, ",".join([t.__str__() for t in zone_control_teams]))
 
         output += "</ul>"
