@@ -19,7 +19,7 @@ from rest_framework import routers
 
 from geogame.models import Team
 from geogame.views import ZoneViewSet, TowerViewSet, TeamViewSet, ChallengeViewSet, MapView, RFIDTowerView, \
-    TowerChallengeView, ScoreMapView, TowerDetailView, TeamTowerChallengeViewSet
+    TowerChallengeView, ScoreMapView, TowerDetailView, TeamTowerChallengeViewSet, RFIDChallengeView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -38,6 +38,7 @@ urlpatterns = [
     path('temerari/', ScoreMapView.as_view(), {"category": Team.TEMERARI}, name="score-map-teme"),
     path('seniori/', ScoreMapView.as_view(), {"category": Team.SENIORI}, name="score-map-seniori"),
     path('tower/<int:pk>/', TowerDetailView.as_view(), name='tower-detail'),
+    path('tower/rfid-challenge/', RFIDChallengeView.as_view(), name='tower-rfid-challenge'),
     path('tower/rfid/<str:rfid_code>/', RFIDTowerView.as_view(), name='tower-rfid'),
     path('tower/challenge/', TowerChallengeView.as_view(), name='tower-challenge'),
     path('api/', include(router.urls)),

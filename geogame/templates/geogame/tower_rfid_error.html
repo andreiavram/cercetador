@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>{{ object.name }}</title>
+    <title>RFID Failed</title>
     <style>
         html {
             position: relative;
@@ -37,42 +37,14 @@
     <main role="main" class="container">
 
 
-    <h1>Turn secret: {{ object.name }}</h1>
-
-    {% if not team %}
-        <form method="post" action="{% url 'tower-rfid-challenge' %}">
-        {% csrf_token %}
-            <input type="hidden" id = "lat" name="lat" value="{{ lat }}">
-            <input type="hidden" id = "lng" name="lng" value="{{ lng }}">
-            <input type="hidden" id = "rfid_code" name = "rfid_code" value="{{ object.rfid_code }}">
-        <div class="mb-3">
-            <label for="team_code" class="form-label">Codul echipei tale</label>
-            <input type="text" name="team_code" class="form-control form-control-lg" id="team_code" aria-describedby="nameHelp" required>
-            <div id="team_code" class="form-text">Codul echipei tale pe care l-ai primit la începutul jocului</div>
-        </div>
-                    <div class="mb-3">
-                        <button id="submitCode" class="btn btn-primary" type="submit">Cucerește turnul!</button>
-                    </div>
-
-
-        </form>
-    {% else %}
-        <div class="alert alert-success" role="alert">
-            Confirmat identitate <strong>{{ team }}</strong>!
-        </div>
-        {% if tower_owner and team and tower_owner.name == team.name %}
-            <p class="lead">Turnul este deținut de <strong style="color: {{ tower_owner.color }}">echipa ta!</strong>
-            </p>
-        {% else %}
-            {% if tower_owner %}
-                <p class="lead">Turnul este controlat de <strong
-                        style="color: {{ tower_owner.color }}">{{ tower_owner.name }}</strong>
-                </p>
-            {% else %}
-                <p class="lead">Turnul momentan nu este controlat de nimeni! Cucerește-l pentru echipa ta!</p>
-            {% endif %}
-        {% endif %}
-    {% endif %}
+    <h1>Activare turn secret eșuată</h1>
+    {% for error in form.non_field_errors %}
+        <div class = "alert alert-danger">{{ error }}</div>
+    {% endfor %}
+    {% for error in form.team_code.errors %}
+        <div class = "alert alert-danger">{{ error }}</div>
+    {% endfor %}
+    <p class = "lead">Încearcă să scanezi iar punctul alb cu telefonul!</p>
 </main>
 
 <footer class="footer">

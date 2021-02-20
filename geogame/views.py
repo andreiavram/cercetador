@@ -1,13 +1,15 @@
 from django.db.models import Count, Q
-from django.http import HttpResponseBadRequest, Http404
+from django.http import HttpResponseBadRequest, Http404, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView
+from django.urls import reverse
+from django.views.generic import TemplateView, DetailView, FormView
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import Distance
 
+from geogame.forms import RFIDTowerForm
 from geogame.models import Zone, Tower, Team, Challenge, TeamTowerChallenge
 from geogame.serializers import ZoneSerializer, TowerSerializer, TeamSerializer, ChallengeSerializer, \
     TeamTowerChallengeSerializer
@@ -87,16 +89,48 @@ class ScoreMapView(TemplateView):
         return context
 
 
+class TowerChallengeView(TemplateView):
+    template_name = "geogame/tower_challenge.html"
+
+
+class RFIDChallengeView(FormView):
+    template_name = "geogame/tower_rfid_error.html"
+    model = TeamTowerChallenge
+    form_class = RFIDTowerForm
+
+    def form_valid(self, form):
+        ttc = TeamTowerChallenge.objects.create(tower=form.cleaned_data['rfid_code'],
+                                                team=form.cleaned_data['team_code'])
+        ttc = TeamTowerChallenge.objects.get(id=ttc.id)
+        ttc.outcome = TeamTowerChallenge.CONFIRMED
+        ttc.save()
+        return HttpResponseRedirect("{}?team={}".format(reverse("tower-rfid", kwargs={"rfid_code": ttc.tower.rfid_code}), ttc.team.id))
+
+
 class RFIDTowerView(DetailView):
     template_name = "geogame/tower_rfid.html"
     model = Tower
 
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.team = Team.objects.get(pk=request.GET.get("team", 0))
+        except Team.DoesNotExist:
+            self.team = None
+
+        return super(RFIDTowerView, self).dispatch(request, *args, **kwargs)
+
     def get_object(self, queryset=None):
-        return Tower.objects.get(rfid_code=self.kwargs.get("rfid_code"))
+        return Tower.objects.get(is_active=True, category=Tower.CATEGORY_RFID, rfid_code=self.kwargs.get("rfid_code"))
 
-
-class TowerChallengeView(TemplateView):
-    template_name = "geogame/tower_challenge.html"
+    def get_context_data(self, **kwargs):
+        context = super(RFIDTowerView, self).get_context_data(**kwargs)
+        context['team'] = self.team
+        if self.team:
+            context['tower_owner'] = self.object.tower_control(category=self.team.category)
+            context['challenge'] = self.object.get_next_challenge(self.team)
+            context['team_has_pending'] = self.object.team_pending(self.team)
+            context['team_in_cooloff'] = self.object.team_in_cooloff(self.team)
+        return context
 
 
 class TowerDetailView(DetailView):
@@ -113,7 +147,7 @@ class TowerDetailView(DetailView):
         self.team = None
         if self.team_code:
             try:
-                self.team = Team.objects.get(code=self.team_code)
+                    self.team = Team.objects.get(code=self.team_code)
             except Team.DoesNotExist:
                 raise Http404("Codul tău de echipă nu e corect!")
         return super(TowerDetailView, self).dispatch(request, *args, **kwargs)
@@ -124,7 +158,7 @@ class TowerDetailView(DetailView):
             point = Point(self.lng, self.lat)
             radius = 50
             try:
-                Tower.objects.get(pk=obj.id, location__distance_lt=(point, Distance(m=radius)))
+                Tower.objects.get(pk=obj.id, is_active=True, category=Tower.CATEGORY_NORMAL, location__distance_lt=(point, Distance(m=radius)))
             except Tower.DoesNotExist:
                 raise Http404("Nu ești lângă obiectiv!")
 

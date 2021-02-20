@@ -76,9 +76,12 @@ class TeamTowerChallangeAdmin(admin.ModelAdmin):
             text += " ..."
         return text
 
+class TeamTowerOwnershipAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.register(Zone, ZoneAdmin)
 admin.site.register(Tower, TowerAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Challenge, ChallengeAdmin)
 admin.site.register(TeamTowerChallenge, TeamTowerChallangeAdmin)
+admin.site.register(TeamTowerOwnership, TeamTowerOwnershipAdmin)

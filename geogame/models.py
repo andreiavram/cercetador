@@ -231,7 +231,7 @@ class TeamTowerChallenge(models.Model):
 
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     tower = models.ForeignKey(Tower, on_delete=models.CASCADE)
-    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, null=True, blank=True)
     timestamp_submitted = models.DateTimeField(auto_now_add=True)
     timestamp_verified = models.DateTimeField(null=True, blank=True)
     outcome = models.PositiveSmallIntegerField(choices=OUTCOME_CHOICES, default=PENDING)
