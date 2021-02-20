@@ -71,9 +71,12 @@ class TeamTowerChallangeAdmin(admin.ModelAdmin):
     readonly_fields = ['response_text', 'photo', 'timestamp_verified', 'team', 'challenge', 'tower']
 
     def challenge_text(self, obj):
-        text = obj.challenge.text[:200]
-        if len(text) > 200:
-            text += " ..."
+        if obj.challenge:
+            text = obj.challenge.text[:200]
+            if len(text) > 200:
+                text += " ..."
+        else:
+            text = "RFID Challenge"
         return text
 
 class TeamTowerOwnershipAdmin(admin.ModelAdmin):
