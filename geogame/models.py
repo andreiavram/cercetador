@@ -186,7 +186,7 @@ class Tower(models.Model):
         if max_difficulty is None:
             max_difficulty = 1
         #   try and get next available challenge for tower, at this difficulty or higher
-        used_challenges_ids = TeamTowerChallenge.objects.filter(tower=self, team=team, outcome=TeamTowerChallenge.CONFIRMED).values_list('challenge_id', flat=True)
+        used_challenges_ids = TeamTowerChallenge.objects.filter(tower=self, team=team, outcome=TeamTowerChallenge.CONFIRMED).exclude(challenge__isnull=True).values_list('challenge_id', flat=True)
         used_challenges_ids = list(used_challenges_ids)
         challenge = Challenge.objects.exclude(pk__in=used_challenges_ids)\
             .filter(tower=self, difficulty__gte=max_difficulty).order_by("difficulty").first()
