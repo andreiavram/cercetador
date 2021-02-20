@@ -55,7 +55,7 @@ class TowerAdmin(LeafletGeoAdmin):
 
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'category', 'score', 'floating_score']
+    list_display = ['__str__', 'category', 'score', 'floating_score', 'description']
     list_filter = ['category']
     readonly_fields = ["score", ]
 

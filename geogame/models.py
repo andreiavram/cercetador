@@ -187,6 +187,7 @@ class Team(models.Model):
     code = models.CharField(max_length=8, unique=True)
     category = models.PositiveSmallIntegerField(choices=CATEGORY_CHOICES)
     color = ColorField()
+    description = models.TextField(null=True, blank=True)
 
     score = models.PositiveIntegerField(default=0)
 
