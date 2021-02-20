@@ -1,8 +1,12 @@
 from django.db.models import Count, Q
+from django.http import HttpResponseBadRequest, Http404
 from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.status import HTTP_400_BAD_REQUEST
+from django.contrib.gis.geos import Point
+from django.contrib.gis.measure import Distance
 
 from geogame.models import Zone, Tower, Team, Challenge
 from geogame.serializers import ZoneSerializer, TowerSerializer, TeamSerializer, ChallengeSerializer
@@ -16,17 +20,44 @@ class ZoneViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Zone.objects.annotate(num_towers=Count('tower', Q(tower__is_active=True))).filter(num_towers__gte=1)
 
+    def get_serializer_context(self):
+        context = super(ZoneViewSet, self).get_serializer_context()
+        context['category'] = self.request.query_params.get('category', 0)
+        return context
+
 
 class TowerViewSet(viewsets.ModelViewSet):
     queryset = Tower.objects.exclude(is_active=False)
     serializer_class = TowerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    def get_queryset(self):
+        queryset = super(TowerViewSet, self).get_queryset()
+        if self.request.query_params.get("lat") and self.request.query_params.get("lng"):
+            lat = float(self.request.query_params.get("lat"))
+            lng = float(self.request.query_params.get("lng"))
+            point = Point(lng, lat)
+            radius = min(float(self.request.query_params.get("accuracy", 100.)), 50.)
+
+            return queryset.filter(location__distance_lt=(point, Distance(m=radius)))
+        return queryset
+
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        category = int(self.request.query_params.get("category", 0))
+        if category:
+            return Team.objects.filter(category=category)
+        return self.queryset
+
+    def get_serializer_context(self):
+        context = super(TeamViewSet, self).get_serializer_context()
+        context['category'] = self.request.query_params.get('category', 0)
+        return context
 
 
 class ChallengeViewSet(viewsets.ModelViewSet):
@@ -59,4 +90,30 @@ class RFIDTowerView(DetailView):
 
 class TowerChallengeView(TemplateView):
     template_name = "geogame/tower_challenge.html"
+
+
+class TowerDetailView(DetailView):
+    model = Tower
+
+    def dispatch(self, request, *args, **kwargs):
+        self.lat = float(request.GET.get("lat", 0.))
+        self.lng = float(request.GET.get("lng", 0.))
+        if not request.user.is_authenticated:
+            if not self.lng or not self.lat:
+                return HttpResponseBadRequest("Nu esti langa obiectiv!")
+        return super(TowerDetailView, self).dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        obj = super(TowerDetailView, self).get_object(queryset)
+        if not self.request.user.is_authenticated:
+            point = Point(self.lng, self.lat)
+            radius = 50
+            try:
+                Tower.objects.get(pk=obj.id, location__distance_lt=(point, Distance(m=radius)))
+            except Tower.DoesNotExist:
+                raise Http404("Nu ești lângă obiectiv!")
+
+        return obj
+
+
 

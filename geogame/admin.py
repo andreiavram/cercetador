@@ -57,6 +57,7 @@ class TowerAdmin(LeafletGeoAdmin):
 class TeamAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'category', 'score', 'floating_score']
     list_filter = ['category']
+    readonly_fields = ["score", ]
 
 
 class ChallengeAdmin(admin.ModelAdmin):
@@ -66,7 +67,14 @@ class ChallengeAdmin(admin.ModelAdmin):
 
 class TeamTowerChallangeAdmin(admin.ModelAdmin):
     list_filter = ['checked_by', 'outcome']
+    list_display = ['id', 'team', 'tower', 'challenge_text', 'checked_by', 'timestamp_submitted', 'timestamp_verified', 'outcome']
+    readonly_fields = ['response_text']
 
+    def challenge_text(self, obj):
+        text = obj.challenge.text[:200]
+        if len(text) > 200:
+            text += " ..."
+        return text
 
 admin.site.register(Zone, ZoneAdmin)
 admin.site.register(Tower, TowerAdmin)

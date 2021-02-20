@@ -29,13 +29,39 @@
             z-index: 400;
         }
 
+        #challenge {
+            font-weight: bold;
+            font-size: 1em;
+            padding: 10px;
+            border-radius: 10px;
+            position: absolute;
+            bottom: 20px;
+            right: 10px;
+            z-index: 400;
+        }
+
+        #scores {
+            padding: 10px;
+            position: absolute;
+            right: 10px;
+            top: 60px;
+            z-index: 400;
+        }
+
+        #scores ol li {
+            padding: 2px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
     <div id = "map"></div>
     <div><button id="rules">Reguli</button></div>
     <div data-team-category="{{ team_category }}" id = "category"></div>
-
+    <div id = "scores">Scores</div>
+    <div><button id="challenge">Provocare</button></div>
 <script src="{% static 'js/map_control_score.js' %}"></script>
 </body>
 </html>

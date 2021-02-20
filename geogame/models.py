@@ -5,6 +5,7 @@ from django.db.models import Count, Max
 from datetime import datetime, timezone
 import math
 
+
 class Zone(models.Model):
     SCORE_LOG = 1
     SCORE_EXP = 2
@@ -34,15 +35,15 @@ class Zone(models.Model):
     def assign_to_team(self, team, handover_time=None):
         if not handover_time:
             handover_time = datetime.now(timezone.utc)
-            try:
-                current_ownership = TeamZoneOwnership.objects.get(zone=self, timestamp_end__isnull=True, team__category=team.category)
-                current_ownership.timestamp_end = handover_time
-                current_ownership.save()
-                team.update_score(current_ownership)
-            except TeamZoneOwnership.DoesNotExist:
-                pass
+        try:
+            current_ownership = TeamZoneOwnership.objects.get(zone=self, timestamp_end__isnull=True, team__category=team.category)
+            current_ownership.timestamp_end = handover_time
+            current_ownership.save()
+            team.update_score(current_ownership)
+        except TeamZoneOwnership.DoesNotExist:
+            pass
 
-            TeamZoneOwnership.objects.create(zone=self, team=team, timestamp_start=handover_time)
+        TeamZoneOwnership.objects.create(zone=self, team=team, timestamp_start=handover_time)
 
     def _get_score_exp(self, seconds):
         mins = seconds / 60.
@@ -54,7 +55,7 @@ class Zone(models.Model):
 
     def _get_score_log(self, seconds):
         mins = seconds / 60.
-        return -12 * math.log(mins)
+        return 30 * math.log(mins) + pow(mins, 2) / 10000
 
     def _get_score_prop(self, seconds):
         mins = seconds / 60.
@@ -93,7 +94,7 @@ class Tower(models.Model):
     def assign_to_team(self, team, challenge):
         handover_time = datetime.now(timezone.utc)
         try:
-            ownership = TeamTowerOwnership.objects.get(tower=self, timestamp_end__isnull=True, team__category=team.category)
+            ownership = TeamTowerOwnership.objects.exclude(team=team).get(tower=self, timestamp_end__isnull=True, team__category=team.category)
             ownership.timestamp_end = handover_time
             ownership.save()
         except TeamTowerOwnership.DoesNotExist:
@@ -118,7 +119,7 @@ class Tower(models.Model):
                 .values('team').annotate(tower_count=Count('tower'))
 
             max_towers = max((stat['tower_count'] for stat in team_stats))
-            new_team_ids = (stat['team'] for stat in team_stats if stat['tower_count'] == max_towers)
+            new_team_ids = list(stat['team'] for stat in team_stats if stat['tower_count'] == max_towers)
 
             #   remove old owners that are not in control anymore
             to_remove = list(set(current_zone_control_teams) - set(new_team_ids))
@@ -131,7 +132,7 @@ class Tower(models.Model):
             #   add new zone owners
             to_add = list(set(new_team_ids) - set(current_zone_control_teams))
             for team_id in to_add:
-                TeamZoneOwnership.objects.create(zone=self.zone, team=team_id, timestamp_start=handover_time)
+                TeamZoneOwnership.objects.create(zone=self.zone, team_id=team_id, timestamp_start=handover_time)
 
     def get_next_challenge(self, team):
         # TODO: cooloff period? do we need this
@@ -185,11 +186,14 @@ class Team(models.Model):
         self.score += zone_ownership.get_score()
         self.save()
 
-    def floating_score(self, when=datetime.now(timezone.utc)):
+    def floating_score(self, when=None):
         floating_score_current = 0
         for zone_ownership in self.teamzoneownership_set.filter(timestamp_end__isnull=True):
-            floating_score_current += zone_ownership.get_score()
+            floating_score_current += zone_ownership.get_score(when=when)
         return floating_score_current
+
+    def current_score(self):
+        return round(self.score + self.floating_score(), 2)
 
 
 class Challenge(models.Model):
@@ -201,6 +205,7 @@ class Challenge(models.Model):
         if self.tower:
             return "(Turn {}) {}".format(self.tower, self.text)
         return self.text
+
 
 class TeamTowerChallenge(models.Model):
     PENDING = 0
@@ -228,11 +233,12 @@ class TeamTowerChallenge(models.Model):
         self.__original_outcome = self.outcome
 
     def save(self, *args, **kwargs):
+        super(TeamTowerChallenge, self).save(*args, **kwargs)
         #   if the team completed the challenge
         if self.__original_outcome != self.outcome:
+            print(self.__original_outcome, self.outcome)
             if self.outcome == TeamTowerChallenge.CONFIRMED:
                 self.tower.assign_to_team(self.team, self.challenge)
-        super(TeamTowerChallenge, self).save(*args, **kwargs)
 
 
 class TeamZoneOwnership(models.Model):
@@ -241,8 +247,8 @@ class TeamZoneOwnership(models.Model):
     timestamp_start = models.DateTimeField(auto_now_add=True)
     timestamp_end = models.DateTimeField(null=True, blank=True)
 
-    def get_score(self, when=datetime.now(timezone.utc)):
-        ref_time = self.timestamp_end or when
+    def get_score(self, when=None):
+        ref_time = self.timestamp_end or datetime.now(timezone.utc)
         score_time = (ref_time - self.timestamp_start).seconds
         return self.zone.get_score(seconds=score_time)
 

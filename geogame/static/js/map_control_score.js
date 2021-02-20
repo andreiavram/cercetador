@@ -1,7 +1,11 @@
-let button = document.getElementById("rules")
-button.addEventListener("click", function (e) {
-    console.log("triggered");
+let buttonRules = document.getElementById("rules")
+buttonRules.addEventListener("click", function (e) {
     window.location.href = "https://docs.google.com/document/d/e/2PACX-1vQJZXyCAOQXdnxLFDDcWMsXWKgvsjs1uQY6MbgeWHdKR466KPYF1AAkbirT2oOXsJvkv4GMshoa2OGK/pub";
+})
+
+let buttonLocation = document.getElementById("challenge")
+buttonLocation.addEventListener("click", function (e) {
+    window.location.href = "/tower/challenge/"
 })
 
 let map = L.map('map').setView([46.06549996715349, 23.570670843267617], 14);
@@ -19,6 +23,11 @@ zones = [];
 towers = [];
 
 function create_zones(data) {
+    zones.forEach(function(e) {
+        e.remove()
+    });
+
+    zones = []
     data.forEach(function (e) {
         //  remove last point
         e.shape.coordinates[0].splice(-1, 1);
@@ -29,7 +38,7 @@ function create_zones(data) {
            shape.push([longlat[1], longlat[0]])
         });
 
-        let poly = L.polygon(shape, {color: e.color})
+        let poly = L.polygon(shape, {color: e.team_color})
         zones.push(poly);
         poly.addTo(map);
     });
@@ -37,10 +46,28 @@ function create_zones(data) {
 
 function create_towers(data) {
     data.forEach(function(e) {
-        let tower = L.marker([e.location.coordinates[1], e.location.coordinates[0]]);
+        let tower = L.marker([e.location.coordinates[1], e.location.coordinates[0]], {"title": e.name, });
         towers.push(tower);
         tower.addTo(map);
     })
+}
+
+let teams = []
+function update_teams(data) {
+    teams = [];
+    document.getElementById("scores").innerHTML = "";
+    data = data.sort((a, b) => (a.current_score < b.current_score) ? 1 : -1);
+    let score_list = "<ol>";
+
+
+    data.forEach(function (e) {
+        teams.push(e);
+
+        score_list += "<li style='color: " + e.color + "'>" + e.name + ": " + e.current_score + "</li>";
+
+    })
+    score_list += "</ol>"
+    document.getElementById("scores").innerHTML = score_list;
 }
 
 let category = document.getElementById("category")
@@ -48,4 +75,8 @@ let teamCategory = category.dataset.teamCategory;
 
 fetch("/api/zones/?category=" + teamCategory).then(response => response.json()).then(data => create_zones(data));
 fetch("/api/towers/").then(response => response.json()).then(data => create_towers(data));
-
+fetch("/api/teams/?category=" + teamCategory).then(response => response.json()).then(data => update_teams(data));
+let teams_intervel = setInterval(function () {
+    fetch("/api/teams/?category=" + teamCategory).then(response => response.json()).then(data => update_teams(data));
+    fetch("/api/zones/?category=" + teamCategory).then(response => response.json()).then(data => create_zones(data));
+}, 5000);
