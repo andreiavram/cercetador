@@ -178,3 +178,10 @@ class TowerDetailView(DetailView):
 
 
 
+class PendingChallenges(TemplateView):
+    template_name = "geogame/pending.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(PendingChallenges, self).get_context_data(**kwargs)
+        context['pending_count'] = TeamTowerChallenge.objects.filter(outcome=TeamTowerChallenge.PENDING).count()
+        return context

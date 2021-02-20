@@ -33,10 +33,10 @@ class RFIDTowerForm(forms.Form):
     def clean(self):
         point = Point(self.cleaned_data['lng'], self.cleaned_data['lat'])
         radius = 50
-        # try:
-        #     Tower.objects.get(pk=self.cleaned_data['rfid_code'].id, is_active=True, category=Tower.CATEGORY_RFID,
-        #                       location__distance_lt=(point, Distance(m=radius)))
-        # except Tower.DoesNotExist:
-        #     raise ValidationError("Nu te gasesti in apropierea turnului! {} {}".format(self.cleaned_data['lng'], self.cleaned_data['lat']))
+        try:
+            Tower.objects.get(pk=self.cleaned_data['rfid_code'].id, is_active=True, category=Tower.CATEGORY_RFID,
+                              location__distance_lt=(point, Distance(m=radius)))
+        except Tower.DoesNotExist:
+            raise ValidationError("Nu te gasesti in apropierea turnului! {} {}".format(self.cleaned_data['lng'], self.cleaned_data['lat']))
 
         return self.cleaned_data

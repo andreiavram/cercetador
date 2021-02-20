@@ -19,7 +19,7 @@ from rest_framework import routers
 
 from geogame.models import Team
 from geogame.views import ZoneViewSet, TowerViewSet, TeamViewSet, ChallengeViewSet, MapView, RFIDTowerView, \
-    TowerChallengeView, ScoreMapView, TowerDetailView, TeamTowerChallengeViewSet, RFIDChallengeView
+    TowerChallengeView, ScoreMapView, TowerDetailView, TeamTowerChallengeViewSet, RFIDChallengeView, PendingChallenges
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -41,6 +41,7 @@ urlpatterns = [
     path('tower/rfid-challenge/', RFIDChallengeView.as_view(), name='tower-rfid-challenge'),
     path('tower/rfid/<str:rfid_code>/', RFIDTowerView.as_view(), name='tower-rfid'),
     path('tower/challenge/', TowerChallengeView.as_view(), name='tower-challenge'),
+    path('pending/', PendingChallenges.as_view()),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls'))
 
