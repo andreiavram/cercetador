@@ -148,6 +148,8 @@ LEAFLET_CONFIG = {
 
 BASE_URL = "http://127.0.0.1:8000"
 
+MEDIA_ROOT = BASE_DIR / "media"
+
 try:
     from .local_settings import *
 except ImportError:

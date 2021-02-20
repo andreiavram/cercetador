@@ -68,13 +68,14 @@ class ChallengeAdmin(admin.ModelAdmin):
 class TeamTowerChallangeAdmin(admin.ModelAdmin):
     list_filter = ['checked_by', 'outcome']
     list_display = ['id', 'team', 'tower', 'challenge_text', 'checked_by', 'timestamp_submitted', 'timestamp_verified', 'outcome']
-    readonly_fields = ['response_text']
+    readonly_fields = ['response_text', 'photo', 'timestamp_verified', 'team', 'challenge', 'tower']
 
     def challenge_text(self, obj):
         text = obj.challenge.text[:200]
         if len(text) > 200:
             text += " ..."
         return text
+
 
 admin.site.register(Zone, ZoneAdmin)
 admin.site.register(Tower, TowerAdmin)

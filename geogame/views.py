@@ -8,8 +8,9 @@ from rest_framework.status import HTTP_400_BAD_REQUEST
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import Distance
 
-from geogame.models import Zone, Tower, Team, Challenge
-from geogame.serializers import ZoneSerializer, TowerSerializer, TeamSerializer, ChallengeSerializer
+from geogame.models import Zone, Tower, Team, Challenge, TeamTowerChallenge
+from geogame.serializers import ZoneSerializer, TowerSerializer, TeamSerializer, ChallengeSerializer, \
+    TeamTowerChallengeSerializer
 
 
 class ZoneViewSet(viewsets.ModelViewSet):
@@ -27,7 +28,7 @@ class ZoneViewSet(viewsets.ModelViewSet):
 
 
 class TowerViewSet(viewsets.ModelViewSet):
-    queryset = Tower.objects.exclude(is_active=False)
+    queryset = Tower.objects.exclude(is_active=False).exclude(category=Tower.CATEGORY_RFID)
     serializer_class = TowerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
@@ -66,6 +67,12 @@ class ChallengeViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
+class TeamTowerChallengeViewSet(viewsets.ModelViewSet):
+    queryset = TeamTowerChallenge.objects.all()
+    serializer_class = TeamTowerChallengeSerializer
+    permission_classes = [permissions.AllowAny]
+
+
 class MapView(TemplateView):
     template_name = "geogame/map.html"
 
@@ -101,6 +108,14 @@ class TowerDetailView(DetailView):
         if not request.user.is_authenticated:
             if not self.lng or not self.lat:
                 return HttpResponseBadRequest("Nu esti langa obiectiv!")
+
+        self.team_code = request.GET.get("team_code")
+        self.team = None
+        if self.team_code:
+            try:
+                self.team = Team.objects.get(code=self.team_code)
+            except Team.DoesNotExist:
+                raise Http404("Codul tău de echipă nu e corect!")
         return super(TowerDetailView, self).dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
@@ -114,6 +129,18 @@ class TowerDetailView(DetailView):
                 raise Http404("Nu ești lângă obiectiv!")
 
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super(TowerDetailView, self).get_context_data(**kwargs)
+        context['lat'] = self.lat
+        context['lng'] = self.lng
+        context['team'] = self.team
+        if self.team:
+            context['tower_owner'] = self.object.tower_control(category=self.team.category)
+            context['challenge'] = self.object.get_next_challenge(self.team)
+            context['team_has_pending'] = self.object.team_pending(self.team)
+            context['team_in_cooloff'] = self.object.team_in_cooloff(self.team)
+        return context
 
 
 

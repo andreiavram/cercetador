@@ -138,9 +138,12 @@ class Tower(models.Model):
         # TODO: cooloff period? do we need this
         #   get max current successful level for this team at this tower
         max_difficulty = TeamTowerChallenge.objects.filter(team=team, tower=self, outcome=TeamTowerChallenge.CONFIRMED)\
-            .aggregate(max_difficulty=Max('challenge_difficulty'))['max_difficulty']
+            .aggregate(max_difficulty=Max('challenge__difficulty'))['max_difficulty']
+        if max_difficulty is None:
+            max_difficulty = 1
         #   try and get next available challenge for tower, at this difficulty or higher
-        used_challenges_ids = TeamTowerChallenge.objects.filter(tower=self, team=team).values_list('team', flat=True)
+        used_challenges_ids = TeamTowerChallenge.objects.filter(tower=self, team=team).values_list('challenge', flat=True)
+        used_challenges_ids = list(used_challenges_ids)
         challenge = Challenge.objects.exclude(pk__in=used_challenges_ids)\
             .filter(tower=self, difficulty__gte=max_difficulty).order_by("difficulty").first()
         if challenge:
@@ -157,9 +160,17 @@ class Tower(models.Model):
 
     def tower_control(self, category):
         try:
-            TeamTowerOwnership.objects.get(timestamp_end__isnull=True, tower=self, team__category=category).team
+            return TeamTowerOwnership.objects.get(timestamp_end__isnull=True, tower=self, team__category=category).team
         except TeamTowerOwnership.DoesNotExist:
             return None
+
+    def team_pending(self, team):
+        return TeamTowerChallenge.objects.filter(team=team, tower=self, outcome=TeamTowerChallenge.PENDING).exists()
+
+    def team_in_cooloff(self, team):
+        ttc = TeamTowerChallenge.objects.filter(team=team, tower=self).order_by("-timestamp_submitted").first()
+        if ttc.outcome == TeamTowerChallenge.REJECTED and (datetime.now(timezone.utc) - ttc.timestamp_verified).seconds < (60 * 5):
+            return True
 
 
 class Team(models.Model):
@@ -226,7 +237,10 @@ class TeamTowerChallenge(models.Model):
     outcome = models.PositiveSmallIntegerField(choices=OUTCOME_CHOICES, default=PENDING)
     checked_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     response_text = models.TextField(null=True, blank=True)
-    # TODO: add response image
+    photo = models.ImageField(upload_to="photos", null=True, blank=True)
+
+    class Meta:
+        ordering = ["-timestamp_submitted"]
 
     def __init__(self, *args, **kwargs):
         super(TeamTowerChallenge, self).__init__(*args, **kwargs)
@@ -236,9 +250,16 @@ class TeamTowerChallenge(models.Model):
         super(TeamTowerChallenge, self).save(*args, **kwargs)
         #   if the team completed the challenge
         if self.__original_outcome != self.outcome:
-            print(self.__original_outcome, self.outcome)
             if self.outcome == TeamTowerChallenge.CONFIRMED:
+                self.__original_outcome = self.outcome
+                self.timestamp_verified = datetime.now(timezone.utc)
                 self.tower.assign_to_team(self.team, self.challenge)
+                self.save()
+            elif self.outcome == TeamTowerChallenge.REJECTED:
+                self.__original_outcome = self.outcome
+                self.timestamp_verified = datetime.now(timezone.utc)
+                self.save()
+
 
 
 class TeamZoneOwnership(models.Model):

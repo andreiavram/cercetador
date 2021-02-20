@@ -19,7 +19,7 @@ from rest_framework import routers
 
 from geogame.models import Team
 from geogame.views import ZoneViewSet, TowerViewSet, TeamViewSet, ChallengeViewSet, MapView, RFIDTowerView, \
-    TowerChallengeView, ScoreMapView, TowerDetailView
+    TowerChallengeView, ScoreMapView, TowerDetailView, TeamTowerChallengeViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,6 +29,7 @@ router.register(r'zones', ZoneViewSet)
 router.register(r'towers', TowerViewSet)
 router.register(r'teams', TeamViewSet)
 router.register(r'challenges', ChallengeViewSet)
+router.register(r'team_tower_challenges', TeamTowerChallengeViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
