@@ -1,6 +1,6 @@
 let buttonRules = document.getElementById("rules")
 buttonRules.addEventListener("click", function (e) {
-    window.location.href = "https://docs.google.com/document/d/e/2PACX-1vQJZXyCAOQXdnxLFDDcWMsXWKgvsjs1uQY6MbgeWHdKR466KPYF1AAkbirT2oOXsJvkv4GMshoa2OGK/pub";
+    window.location.href = "/rules/";
 })
 
 let buttonLocation = document.getElementById("challenge")
