@@ -194,7 +194,7 @@ class Tower(models.Model):
             return challenge
 
         challenge = Challenge.objects.exclude(pk__in=used_challenges_ids)\
-            .filter(difficulty__gte=max_difficulty).order_by("difficulty").first()
+            .filter(difficulty__gte=max_difficulty, tower__isnull=True).order_by("difficulty").first()
         if challenge:
             return challenge
 
