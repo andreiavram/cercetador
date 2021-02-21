@@ -62,8 +62,14 @@ class TeamAdmin(admin.ModelAdmin):
 
 
 class ChallengeAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'tower', 'difficulty']
-    list_filter = ['tower']
+    list_display = ['__str__', 'tower', 'difficulty', 'incercari_total', 'incercari_reusite']
+    list_filter = ['tower', ]
+
+    def incercari_total(self, obj):
+        return TeamTowerChallenge.objects.filter(challenge=obj).count()
+
+    def incercari_reusite(self, obj):
+        return TeamTowerChallenge.objects.filter(challenge=obj, outcome=TeamTowerChallenge.CONFIRMED).count()
 
 
 class TeamTowerChallangeAdmin(admin.ModelAdmin):
