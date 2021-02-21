@@ -39,7 +39,7 @@ class Zone(models.Model):
             current_ownership = TeamZoneOwnership.objects.get(zone=self, timestamp_end__isnull=True, team__category=team.category)
             current_ownership.timestamp_end = handover_time
             current_ownership.save()
-            team.update_score(current_ownership)
+            current_ownership.team.update_score(current_ownership)
         except TeamZoneOwnership.DoesNotExist:
             pass
 
