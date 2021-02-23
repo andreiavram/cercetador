@@ -181,25 +181,34 @@ class Tower(models.Model):
                 TeamZoneOwnership.objects.create(zone=self.zone, team_id=team_id, timestamp_start=handover_time)
 
     def get_next_challenge(self, team):
+        #   first, use tower-related challenges
         max_difficulty = TeamTowerChallenge.objects.filter(team=team, tower=self, outcome=TeamTowerChallenge.CONFIRMED)\
             .aggregate(max_difficulty=Max('challenge__difficulty'))['max_difficulty']
-        if max_difficulty is None:
-            max_difficulty = 1
-        #   try and get next available challenge for tower, at this difficulty or higher
-        used_challenges_ids = TeamTowerChallenge.objects.filter(team=team, outcome=TeamTowerChallenge.CONFIRMED).exclude(challenge__isnull=True).values_list('challenge_id', flat=True)
+        max_difficulty = 1 if max_difficulty is None else max_difficulty
+
+        used_challenges_ids = TeamTowerChallenge.objects.filter(team=team, outcome=TeamTowerChallenge.CONFIRMED)\
+            .exclude(challenge__isnull=True).values_list('challenge_id', flat=True)
         used_challenges_ids = list(used_challenges_ids)
         challenge = Challenge.objects.exclude(pk__in=used_challenges_ids)\
             .filter(tower=self, difficulty__gte=max_difficulty).order_by("difficulty").first()
+
         if challenge:
             return challenge
 
+        # then, use generic challenges
+        generic_challenge_filter = dict(team=team, tower__isnull=True, outcome=TeamTowerChallenge.CONFIRMED)
+        max_difficulty = TeamTowerChallenge.objects.filter(**generic_challenge_filter)\
+            .aggregate(max_difficulty=Max('challenge__difficulty'))['max_difficulty']
+        max_difficulty = 1 if max_difficulty is None else max_difficulty
+
         challenge = Challenge.objects.exclude(pk__in=used_challenges_ids)\
             .filter(difficulty__gte=max_difficulty, tower__isnull=True).order_by("difficulty").first()
+
         if challenge:
             return challenge
 
         # TODO: out of challenges, what now?
-        # Returning toughest challenge for now
+        # Returning toughest challenge on repeat for now
         return Challenge.objects.filter(tower__isnull=True).order_by("-difficulty").first()
 
     def tower_control(self, category):
