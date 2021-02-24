@@ -119,8 +119,11 @@ class Tower(models.Model):
                                                                timestamp_end__isnull=True, team__category=category)\
                     .values('team').annotate(tower_count=Count('tower'))
 
-                max_towers = max((stat['tower_count'] for stat in team_stats))
-                new_team_ids = list(stat['team'] for stat in team_stats if stat['tower_count'] == max_towers)
+                if team_stats.count():
+                    max_towers = max((stat['tower_count'] for stat in team_stats))
+                    new_team_ids = list(stat['team'] for stat in team_stats if stat['tower_count'] == max_towers)
+                else:
+                    new_team_ids = []
 
                 #   remove old owners that are not in control anymore
                 to_remove = list(set(current_zone_control_teams) - set(new_team_ids))
