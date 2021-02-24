@@ -1,0 +1,52 @@
+language: python
+python:
+  - "3.8"
+# command to install dependencies
+services:
+- postgresql
+
+env:
+  jobs:
+    - DB_TEST_NAME="travis_ci_test" DB_PORT="5433"
+  global:
+    - PGPORT=5433
+
+addons:
+  postgresql: "12"
+  apt:
+    packages:
+    - postgresql-12-postgis-3
+
+
+install:
+  - pip install -r requirements.txt
+
+
+before_script:
+ - psql -c 'create database travis_ci_test;' -U postgres
+ - psql -U postgres -c "create extension postgis;" travis_ci_test
+
+script:
+  - python manage.py test
+
+notifications:
+  email:
+    recipients:
+      - andrei.avram@albascout.ro
+    on_success: never
+    on_failure: always
+
+#deploy:
+#
+#  - provider: script
+#    script: fab -H yeti.albascout.ro:24 -u scoutfile --password $DEPLOY_PASSWORD deploy_app
+#    on:
+#      branch: master
+#    skip_cleanup: true
+#
+#  - provider: script
+#    script: fab -H yeti.albascout.ro:24 -u scoutfile --password $DEPLOY_PASSWORD deploy_app
+#    on:
+#      branch: develop
+#    skip_cleanup: true
+#

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,11 +87,14 @@ WSGI_APPLICATION = 'cercetador.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'cercetador',
-        'USER': 'postgres',
-        'PASSWORD': 'sql123.',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME', 'cercetador'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'sql123.'),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+        'TEST': {
+            'NAME': os.environ.get('DB_TEST_NAME', 'cercetador_test'),
+        }
     }
 }
 
@@ -146,7 +150,7 @@ LEAFLET_CONFIG = {
     'DEFAULT_ZOOM': 14,
 }
 
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = os.environ.get("BASE_URL", "http://127.0.0.1:8000")
 
 MEDIA_ROOT = BASE_DIR / "media"
 
