@@ -38,7 +38,7 @@ before_script:
  - sudo psql -p $PGPORT -c "create extension postgis;" -U postgres travis_ci_test
 
 script:
-  - python manage.py test
+  - python manage.py test --noinput
 
 notifications:
   email:
