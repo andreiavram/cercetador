@@ -11,6 +11,16 @@ env:
   global:
     - PGPORT=5433
 
+before_install:
+  # Use trust instead of peer authentication:
+  - >-
+    sudo sed -i
+    -e '/local.*peer/s/postgres/all/'
+    -e 's/peer\|md5/trust/g'
+    /etc/postgresql/12/main/pg_hba.conf
+  # Restart the PostgreSQL service:
+  - sudo service postgresql@12-main restart
+
 addons:
   postgresql: "12"
   apt:
@@ -23,8 +33,8 @@ install:
 
 
 before_script:
- - psql -c 'create database travis_ci_test;' -U postgres
- - psql -U postgres -c "create extension postgis;" travis_ci_test
+ - sudo psql -p $PGPORT -c 'create database travis_ci_test;' -U postgres
+ - sudo psql -p $PGPORT -c "create extension postgis;" -U postgres travis_ci_test
 
 script:
   - python manage.py test
