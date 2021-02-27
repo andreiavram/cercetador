@@ -1,7 +1,7 @@
 from django.test import TestCase
 from unittest.mock import MagicMock, patch
 
-from geogame.models import Team, Tower, TeamZoneOwnership, TeamTowerOwnership, TeamTowerChallenge
+from geogame.models import Team, Tower, TeamZoneOwnership, TeamTowerOwnership, TeamTowerChallenge, Challenge
 
 
 class ZoneControlTest(TestCase):
@@ -47,6 +47,86 @@ class ZoneControlTest(TestCase):
         self.t2 = Team.objects.get(code="EXPLO2")
         self.assertEqual(self.t1.score, 2)
         self.assertEqual(self.t2.score, 1)
+
+    def tearDown(self) -> None:
+        TeamZoneOwnership.objects.all().delete()
+        TeamTowerOwnership.objects.all().delete()
+        TeamTowerChallenge.objects.all().delete()
+
+
+class ChallengeTest(TestCase):
+    fixtures = ["tower_zones.json"]
+
+    def setUp(self):
+        self.t1 = Team.objects.create(name="explo1", category=Team.EXPLORATORI, code="EXPLO1", color="#003366")
+        self.t2 = Team.objects.create(name="explo2", category=Team.EXPLORATORI, code="EXPLO2", color="#003366")
+
+        self.tower1 = Tower.objects.get(name__icontains="Dendroparc")
+        self.zone1 = self.tower1.zone
+
+        self.tower2 = Tower.objects.get(name__iexact="Piata")
+
+        self.c1 = Challenge.objects.create(text="c1", tower=self.tower1, difficulty=1)
+        self.c2 = Challenge.objects.create(text="c2", tower=self.tower1, difficulty=1)
+        self.c3 = Challenge.objects.create(text="c3", tower=self.tower1, difficulty=2)
+        self.c4 = Challenge.objects.create(text="c4", tower=self.tower1, difficulty=5)
+        self.c5 = Challenge.objects.create(text="c5", tower=None, difficulty=1)
+        self.c6 = Challenge.objects.create(text="c6", tower=None, difficulty=2)
+        self.c7 = Challenge.objects.create(text="c7", tower=None, difficulty=5)
+
+    def test_challenge_assignment_progression1(self):
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c1)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t1, tower=self.tower1, challenge=self.c1, outcome=TeamTowerChallenge.REJECTED)
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c1)
+        self.assertEqual(self.tower1.get_next_challenge(self.t2), self.c1)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t1, tower=self.tower1, challenge=self.c1, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c2)
+        self.assertEqual(self.tower1.get_next_challenge(self.t2), self.c1)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t1, tower=self.tower1, challenge=self.c2, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c3)
+        self.assertEqual(self.tower1.get_next_challenge(self.t2), self.c1)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t1, tower=self.tower1, challenge=self.c3, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c4)
+        self.assertEqual(self.tower1.get_next_challenge(self.t2), self.c1)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t1, tower=self.tower1, challenge=self.c4, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c5)
+        self.assertEqual(self.tower1.get_next_challenge(self.t2), self.c1)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t1, tower=self.tower1, challenge=self.c5, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c6)
+        self.assertEqual(self.tower1.get_next_challenge(self.t2), self.c1)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t1, tower=self.tower1, challenge=self.c6, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c7)
+        self.assertEqual(self.tower1.get_next_challenge(self.t2), self.c1)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t1, tower=self.tower1, challenge=self.c7, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower1.get_next_challenge(self.t1), self.c7)
+        self.assertEqual(self.tower1.get_next_challenge(self.t2), self.c1)
+
+        self.assertEqual(self.tower2.get_next_challenge(self.t1), self.c7)
+        self.assertEqual(self.tower2.get_next_challenge(self.t2), self.c5)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t2, tower=self.tower2, challenge=self.c5, outcome=TeamTowerChallenge.REJECTED)
+        self.assertEqual(self.tower2.get_next_challenge(self.t1), self.c7)
+        self.assertEqual(self.tower2.get_next_challenge(self.t2), self.c5)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t2, tower=self.tower2, challenge=self.c5, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower2.get_next_challenge(self.t1), self.c7)
+        self.assertEqual(self.tower2.get_next_challenge(self.t2), self.c6)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t2, tower=self.tower2, challenge=self.c6, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower2.get_next_challenge(self.t1), self.c7)
+        self.assertEqual(self.tower2.get_next_challenge(self.t2), self.c7)
+
+        ttc = TeamTowerChallenge.objects.create(team=self.t2, tower=self.tower2, challenge=self.c7, outcome=TeamTowerChallenge.CONFIRMED)
+        self.assertEqual(self.tower2.get_next_challenge(self.t1), self.c7)
+        self.assertEqual(self.tower2.get_next_challenge(self.t2), self.c7)
 
     def tearDown(self) -> None:
         TeamZoneOwnership.objects.all().delete()
