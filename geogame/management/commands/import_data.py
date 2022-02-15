@@ -12,6 +12,8 @@ class Command(BaseCommand):
     def parse_zones(self, doc, zone_type):
         zones = doc.getElementsByTagName("Placemark")
         for zone in zones:
+            if not zone.getElementsByTagName("Polygon"):
+                continue
             zone_name = zone.getElementsByTagName("name")[0].firstChild.wholeText
             zone_data = zone.getElementsByTagName("coordinates")[0].firstChild.wholeText.strip()
 
@@ -26,15 +28,17 @@ class Command(BaseCommand):
         Tower.objects.all().delete()
         Challenge.objects.all().delete()
 
-        doc = xml.dom.minidom.parse(str(settings.BASE_DIR / "geogame" / "data" / "zone_normal.kml"))
+        doc = xml.dom.minidom.parse(str(settings.BASE_DIR / "geogame" / "data" / "cub.kml"))
         self.parse_zones(doc, 1)
 
-        doc = xml.dom.minidom.parse(str(settings.BASE_DIR / "geogame" / "data" / "zone_bonus.kml"))
-        self.parse_zones(doc, 4)
+        # doc = xml.dom.minidom.parse(str(settings.BASE_DIR / "geogame" / "data" / "zone_bonus.kml"))
+        # self.parse_zones(doc, 4)
 
-        doc = xml.dom.minidom.parse(str(settings.BASE_DIR / "geogame" / "data" / "puncte.kml"))
+        doc = xml.dom.minidom.parse(str(settings.BASE_DIR / "geogame" / "data" / "cub.kml"))
         points = doc.getElementsByTagName("Placemark")
         for point in points:
+            if point.getElementsByTagName("Polygon"):
+                continue
             point_name = point.getElementsByTagName("name")[0].firstChild.wholeText
 
             try:

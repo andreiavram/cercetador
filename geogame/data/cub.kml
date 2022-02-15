@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>CUB Adventures in the Scout Multiverse</name>
+    <Style id="icon-1899-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-0288D1-nodesc-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1899-0288D1-nodesc-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1899-0288D1-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0288D1-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0288D1-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-000000-1200-77-nodesc-normal">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d000000</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="poly-000000-1200-77-nodesc-highlight">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d000000</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="poly-000000-1200-77-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-000000-1200-77-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-000000-1200-77-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Placemark>
+      <name>Biblioteca națională - filială</name>
+      <description><![CDATA[1. Cine este fondatorul Cercetășiei?<br>2. Pe ce dată s-a născut Baden Powell?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.1195483,44.4273538,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>5 to go</name>
+      <description><![CDATA[1. Când și unde se înființează OMMS (Organizația Mondială a Mișcării Scout)?<br>2. Pe baza cărei cărți (scrisă de BP) acesta a scris apoi Scouting for Boys?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0878188,44.4544025,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Parcul Carol</name>
+      <description><![CDATA[1. Cum se numește organizația creată în 1937 de Carol al 2-lea, când desființează Asociația ”Cercetașii României”?<br>2. În ce an Asociația ”Cercetașii României” devine Organizația Națională ”Cercetașii României”?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0959202,44.4152297,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Insula Trandafirilor</name>
+      <description><![CDATA[1. Ce simbol se află pe piatra de mormânt a lui BP?<br>2. În ce an a murit BP?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.079,44.4730833333333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>PETIT CAPRICE</name>
+      <description>A fost scriitor, preot greco-catolic și cercetaș.</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.1714748,44.4229604,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Monument bust </name>
+      <description>A fost judecător, a scris ”Nuvele și schițe” și a fost cercetaș. </description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          25.4678145,44.92639,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Muzeul Memorial </name>
+      <description>A fost critic literar, prenumele lui adevărat era Gheorghe, însă era cunoscut altfel, și a fost cercetaș</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0996324,44.4621507,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Mega Image</name>
+      <description>A fost un om politic român și cercetaș</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.1031454,44.4325051,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Piață</name>
+      <description>Autorul celebrului citat ”Voi lupta până la ultima mea picătură de sânge ca să ai dreptul să nu fii de acord cu mine!” și cercetaș. </description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0947193,44.4362697,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Parc</name>
+      <description>A fost istoric, critic literar, poet și cercetaș (și multe alte titluri).</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0905758,44.4470064,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Statuie </name>
+      <description>Autorul Baltagului, cercetaș</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0887667,44.4765204,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Stradă</name>
+      <description>Cercetaș, academician, geograf și geopolitician român</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0490673,44.4575351,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Monument bust </name>
+      <description>Cercetaș, a scris ”Romanul adolescentului miop” și e cel care a afirmat ”“am fost un golan, cercetăşia m-a salvat”</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0961429,44.4657761,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Statui</name>
+      <description><![CDATA[1. În ce an are loc prima tabără de cercetași, din lume?<br>2. Cum se numește locul în care a avut loc prima tabără a cercetașilor din România, din 1919?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.1680442,44.4435468,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Muzeul Memorial 
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.101888,44.46204,0
+              26.1030896,44.4664504,0
+              26.0951932,44.4643678,0
+              26.0950215,44.4615499,0
+              26.101888,44.46204,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Monument bust 
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.1030896,44.4664504,0
+              26.0997422,44.4752703,0
+              26.0895284,44.473433,0
+              26.0951932,44.4643678,0
+              26.1030896,44.4664504,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Statuie </name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0895284,44.473433,0
+              26.0997422,44.4752703,0
+              26.0939057,44.4801949,0
+              26.0842927,44.4785414,0
+              26.0826619,44.4735806,0
+              26.0895284,44.473433,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Insula Trandafirilor</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0826619,44.4735806,0
+              26.0842927,44.4785414,0
+              26.0449377,44.4740632,0
+              26.0451094,44.4685508,0
+              26.0801927,44.472231,0
+              26.0826619,44.4735806,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Stradă</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0451094,44.4685508,0
+              26.0449377,44.4740632,0
+              26.0318915,44.4701434,0
+              26.0425345,44.4499273,0
+              26.0530058,44.4507851,0
+              26.0638205,44.4542162,0
+              26.0651938,44.4588723,0
+              26.0602156,44.4626704,0
+              26.0572974,44.4583822,0
+              26.0528342,44.4572794,0
+              26.0507742,44.4619353,0
+              26.0451094,44.4685508,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Ambasada</name>
+      <description><![CDATA[1. În ce țară se află cei mai mulți cercetași?<br>2. Cum se numea soția lui BP?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0893552,44.4564421,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Muzeul Național de Istorie Naturală</name>
+      <description>A fost om de ştiinţă și cercetaș</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0849208,44.4532011,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ambasada</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.089991,44.4594372,0
+              26.0858711,44.4577218,0
+              26.0920509,44.4545361,0
+              26.09454,44.4559452,0
+              26.089991,44.4594372,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>5 to go
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0858711,44.4577218,0
+              26.0831245,44.4566387,0
+              26.0881885,44.4529934,0
+              26.0920509,44.4545361,0
+              26.0858711,44.4577218,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Muzeul Național de Istorie Naturală
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0831245,44.4566387,0
+              26.0782322,44.4548007,0
+              26.0834249,44.4514004,0
+              26.0881885,44.4529934,0
+              26.0831245,44.4566387,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Laborator Sanador Plevnei
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0672002,44.4504263,0
+              26.0591321,44.4454018,0
+              26.068831,44.4398867,0
+              26.0767274,44.4460146,0
+              26.0672002,44.4504263,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name><![CDATA[Muzeul Militar Naţional "Regele Ferdinand I"
+]]></name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0767274,44.4460146,0
+              26.068831,44.4398867,0
+              26.074925,44.4351678,0
+              26.0771566,44.4359646,0
+              26.0841947,44.4413575,0
+              26.0767274,44.4460146,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Institutul Național de Cercetare-Dezvoltare Medico-Militară
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0841947,44.4413575,0
+              26.0771566,44.4359646,0
+              26.074925,44.4351678,0
+              26.0785299,44.4325937,0
+              26.0819631,44.4310002,0
+              26.084023,44.4320421,0
+              26.0862546,44.4343098,0
+              26.085053,44.4364548,0
+              26.0876279,44.4387224,0
+              26.0841947,44.4413575,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Parc</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.09454,44.4559452,0
+              26.0920509,44.4545361,0
+              26.0901599,44.4537961,0
+              26.0834249,44.4514004,0
+              26.0885292,44.4473013,0
+              26.0914474,44.4460146,0
+              26.0932498,44.446995,0
+              26.0944515,44.4479141,0
+              26.0945373,44.4500586,0
+              26.0996871,44.4520193,0
+              26.09454,44.4559452,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Club</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0914474,44.4460146,0
+              26.0958248,44.4426137,0
+              26.0991722,44.4446359,0
+              26.0980134,44.4468724,0
+              26.1027341,44.4468724,0
+              26.1043649,44.4489557,0
+              26.0996871,44.4520193,0
+              26.0945373,44.4500586,0
+              26.0944515,44.4479141,0
+              26.0932498,44.446995,0
+              26.0914474,44.4460146,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>POINT</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.1043649,44.4489557,0
+              26.1027341,44.4468724,0
+              26.0980134,44.4468724,0
+              26.0991722,44.4446359,0
+              26.0958248,44.4426137,0
+              26.0983735,44.4401892,0
+              26.1009484,44.4414148,0
+              26.1050683,44.4428855,0
+              26.1070853,44.4453366,0
+              26.1043649,44.4489557,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Palatul Regal din București
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0958248,44.4426137,0
+              26.0933953,44.4398828,0
+              26.0876279,44.4387224,0
+              26.0898763,44.4373702,0
+              26.0968286,44.43927,0
+              26.0983735,44.4401892,0
+              26.0958248,44.4426137,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Colegiul Național Gheorghe Lazăr
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0876279,44.4387224,0
+              26.085053,44.4364548,0
+              26.0862546,44.4343098,0
+              26.084023,44.4320421,0
+              26.0819631,44.4310002,0
+              26.0870868,44.4294026,0
+              26.0909921,44.4292494,0
+              26.0941678,44.4297398,0
+              26.0941249,44.4332027,0
+              26.0934383,44.435838,0
+              26.0898763,44.4373702,0
+              26.0876279,44.4387224,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Universitatea de Arhitectură și Urbanism
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.1070853,44.4453366,0
+              26.1050683,44.4428855,0
+              26.1009484,44.4414148,0
+              26.0983735,44.4401892,0
+              26.1000472,44.4388103,0
+              26.0978585,44.4365122,0
+              26.099661,44.434551,0
+              26.1037164,44.4351486,0
+              26.1070853,44.4360526,0
+              26.1102182,44.4404343,0
+              26.1070853,44.4453366,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Piață</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0898763,44.4373702,0
+              26.0934383,44.435838,0
+              26.0978585,44.4365122,0
+              26.1000472,44.4388103,0
+              26.0983735,44.4401892,0
+              26.0968286,44.43927,0
+              26.0898763,44.4373702,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Mega Image
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.1070853,44.4360526,0
+              26.1037164,44.4351486,0
+              26.099661,44.434551,0
+              26.0978585,44.4365122,0
+              26.0934383,44.435838,0
+              26.0941249,44.4332027,0
+              26.0941678,44.4297398,0
+              26.0954982,44.4295559,0
+              26.100648,44.4306898,0
+              26.1039525,44.4324366,0
+              26.1070853,44.4360526,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Statui</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.1645436,44.4532279,0
+              26.1322712,44.43987,0
+              26.1429142,44.4293286,0
+              26.1760449,44.4430566,0
+              26.1645436,44.4532279,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Biblioteca națională - filială
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.1322712,44.43987,0
+              26.0993123,44.4250379,0
+              26.1123585,44.4154747,0
+              26.1429142,44.4293286,0
+              26.1322712,44.43987,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Parcul Carol
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0993123,44.4250379,0
+              26.0816311,44.4162104,0
+              26.0941624,44.40591,0
+              26.1123585,44.4154747,0
+              26.0993123,44.4250379,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>PETIT CAPRICE
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.1760449,44.4430566,0
+              26.1705518,44.4406667,0
+              26.167376,44.4393797,0
+              26.169994,44.4369897,0
+              26.173985,44.435335,0
+              26.1763882,44.4295737,0
+              26.17347,44.4261719,0
+              26.1693072,44.4239345,0
+              26.165359,44.4228619,0
+              26.1606812,44.4233828,0
+              26.1511539,44.4325771,0
+              26.1398243,44.4276123,0
+              26.1458325,44.4208695,0
+              26.1533856,44.4154747,0
+              26.163857,44.4106312,0
+              26.1762166,44.4107538,0
+              26.1839413,44.4158426,0
+              26.1897778,44.4197661,0
+              26.1914944,44.4252831,0
+              26.1885762,44.4328835,0
+              26.1760449,44.4430566,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Institutul de Medicină Legală 
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.1398243,44.4276123,0
+              26.130383,44.4236252,0
+              26.1341595,44.4203763,0
+              26.1393952,44.4137552,0
+              26.1404252,44.4081145,0
+              26.1409401,44.3998977,0
+              26.1385369,44.3952982,0
+              26.1341595,44.3927224,0
+              26.1285805,44.3946236,0
+              26.1266064,44.3921091,0
+              26.1202549,44.3892264,0
+              26.1266922,44.3860369,0
+              26.1338162,44.3843194,0
+              26.1436867,44.3865889,0
+              26.1478066,44.3903304,0
+              26.1505102,44.3937343,0
+              26.1518407,44.3972607,0
+              26.1529565,44.4035157,0
+              26.1516689,44.4094021,0
+              26.1507248,44.4131421,0
+              26.1458325,44.4208695,0
+              26.1398243,44.4276123,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Casa Memorială
+</name>
+      <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              26.0941624,44.40591,0
+              26.106007,44.3972607,0
+              26.1151051,44.3922317,0
+              26.1202549,44.3892264,0
+              26.1266064,44.3921091,0
+              26.1285805,44.3946236,0
+              26.1269497,44.3957889,0
+              26.1238598,44.3991005,0
+              26.1216282,44.4016761,0
+              26.1193966,44.4040062,0
+              26.1128735,44.4095247,0
+              26.1079811,44.4130809,0
+              26.0941624,44.40591,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Casa Memorială
+</name>
+      <description>Numele lui adevărat era Ion Nae Theodorescu, a fost scriitor și cercetaș</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.1185074,44.3984501,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Institutul de Medicină Legală</name>
+      <description>Sunt frați și au fost cercetași.</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.1427963,44.3893943,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Laborator Sanador Plevnei</name>
+      <description><![CDATA[1. Câte organizații membre are WOSM acum?<br>2. Câți cercetași sunt acum la nivel mondial?<br>44.44399, 26.0699]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0699709,44.4439697,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name><![CDATA[Muzeul Militar Naţional "Regele Ferdinand I"
+]]></name>
+      <description><![CDATA[1. Unde se află primul (și singurul) monument dedicat cercetașilor care au murit în război?<br>2. A apărut pe bancnota de 20 lei în 2022.]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0763826,44.4414955,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Institutul Național de Cercetare-Dezvoltare Medico-Militară
+</name>
+      <description>A fost medic, microbiolog și cercetaș</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0815294,44.4327311,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Colegiul Național Gheorghe Lazăr
+</name>
+      <description><![CDATA[1. În ce localități apar primele grupuri de cercetași români în 1912?<br>2. Cine aduce cercetășia în România? ]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0903656,44.4346598,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Palatul Regal din București
+</name>
+      <description><![CDATA[1. A fost ultimul Rege al României, a murit în 2017 și a fost cercetaș.<br>2. cunoscută și ca domnița Ileana, fiica cea mai mică a Regelui Ferdinand I, a fost cercetaș.<br>3. Al patrulea copil al cuplului princiar Ferdinand și Maria, cercetaș]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0966254,44.4398013,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Universitatea de Arhitectură și Urbanism
+</name>
+      <description>A fost deputat, a studiat la Paris și a fost cercetaș</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0995176,44.4359188,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>POINT</name>
+      <description>A fost unul dintre generalii Armatei României din Primul Război Mondial, a murit de gripa spaniolă și a fost cercetaș.</description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.1024461,44.4446198,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Club</name>
+      <description><![CDATA[1. În ce loc s-a născut cercetășia?<br>2. Când are loc prima Jamboree, Olympia?]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <Point>
+        <coordinates>
+          26.0955528,44.4453133,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Point 52</name>
+      <styleUrl>#icon-1899-0288D1-nodesc</styleUrl>
+      <Point>
+        <coordinates>
+          26.0862007,44.4438425,0
+        </coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
