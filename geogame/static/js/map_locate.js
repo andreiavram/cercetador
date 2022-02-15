@@ -1,4 +1,4 @@
-let map = L.map('map').setView([46.06549996715349, 23.570670843267617], 14);
+let map = L.map('map').setView([44.43591, 26.09951], 13);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
