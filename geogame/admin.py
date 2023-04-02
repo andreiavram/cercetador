@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.urls import reverse
 from django.conf import settings
 from leaflet.admin import LeafletGeoAdmin
@@ -27,6 +27,16 @@ class ZoneAdmin(LeafletGeoAdmin):
     get_zone_control.short_description = "Controlled by"
 
 
+def unassign_all(modeladmin, request, queryset):
+    tower_names = []
+    for tower in queryset:
+        tower.unassign()
+        tower_names.append(tower.name)
+
+    messages.success(request, f"Finalizat posesii pentru turnurile {', '.join(tower_names)}")
+unassign_all.short_description = "Închide toate deținerile de Zone (selectează toate turnurile pentru a închide jocul)"
+
+
 class TowerAdmin(LeafletGeoAdmin):
     list_display = [
         '__str__', 'is_active', 'zone', 'category', 'get_tower_control', 'get_rfid_url', 'id',
@@ -34,6 +44,7 @@ class TowerAdmin(LeafletGeoAdmin):
     ]
     list_filter = ['zone', 'is_active', 'category']
     # readonly_fields = ['rfid_code']
+    actions = [unassign_all, ]
 
     def get_tower_control(self, instance):
         output = "<ul>"
