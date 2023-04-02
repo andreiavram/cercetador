@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        CreateExtension('postgis'),
+        # CreateExtension('postgis'),
         migrations.CreateModel(
             name='Challenge',
             fields=[
