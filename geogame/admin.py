@@ -28,7 +28,10 @@ class ZoneAdmin(LeafletGeoAdmin):
 
 
 class TowerAdmin(LeafletGeoAdmin):
-    list_display = ['__str__', 'is_active', 'zone', 'category', 'get_tower_control', 'get_rfid_url', 'id']
+    list_display = [
+        '__str__', 'is_active', 'zone', 'category', 'get_tower_control', 'get_rfid_url', 'id',
+        'initial_bonus'
+    ]
     list_filter = ['zone', 'is_active', 'category']
     # readonly_fields = ['rfid_code']
 

@@ -39,7 +39,7 @@ class Zone(models.Model):
             current_ownership = TeamZoneOwnership.objects.get(zone=self, timestamp_end__isnull=True, team__category=team.category)
             current_ownership.timestamp_end = handover_time
             current_ownership.save()
-            current_ownership.team.update_score(current_ownership)
+            current_ownership.team.update_score(current_ownership.get_score())
         except TeamZoneOwnership.DoesNotExist:
             pass
 
@@ -86,6 +86,8 @@ class Tower(models.Model):
     category = models.PositiveSmallIntegerField(choices=CATEGORY_CHOICES)
     is_active = models.BooleanField()
 
+    initial_bonus = models.PositiveIntegerField(default=0, help_text="Număr inițial de puncte obținute la câștigarea turnului")
+
     rfid_code = models.CharField(max_length=16, unique=True, null=True, blank=True)
 
     def __init__(self, *args, **kwargs):
@@ -106,7 +108,7 @@ class Tower(models.Model):
             for ownership in ownerships:
                 ownership.timestamp_end = handover_time
                 ownership.save()
-                ownership.team.update_score(ownership)
+                ownership.team.update_score(ownership.get_score())
 
         elif zone_tower_count > 0:
             #   recalculeaza ownership pentru situatia cu noul turn
@@ -131,14 +133,17 @@ class Tower(models.Model):
                 for zone_ownership in to_close:
                     zone_ownership.timestamp_end = handover_time
                     zone_ownership.save()
-                    zone_ownership.team.update_score(zone_ownership)
+                    zone_ownership.team.update_score(zone_ownership.get_score())
 
                 #   add new zone owners
                 to_add = list(set(new_team_ids) - set(current_zone_control_teams))
                 for team_id in to_add:
                     TeamZoneOwnership.objects.create(zone=self.zone, team_id=team_id, timestamp_start=handover_time)
 
-    def assign_to_team(self, team, challenge=None):
+    def assign_to_team(self, team, challenge=None, no_bonus=False):
+        if not no_bonus:
+            team.update_score(self.initial_bonus)
+
         handover_time = datetime.now(timezone.utc)
         try:
             ownership = TeamTowerOwnership.objects.exclude(team=team)\
@@ -176,7 +181,7 @@ class Tower(models.Model):
             for zone_ownership in to_close:
                 zone_ownership.timestamp_end = handover_time
                 zone_ownership.save()
-                zone_ownership.team.update_score(zone_ownership)
+                zone_ownership.team.update_score(zone_ownership.get_score())
 
             #   add new zone owners
             to_add = list(set(new_team_ids) - set(current_zone_control_teams))
@@ -255,8 +260,8 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
-    def update_score(self, zone_ownership):
-        self.score += zone_ownership.get_score()
+    def update_score(self, score):
+        self.score += score
         self.save()
 
     def floating_score(self, when=None):
