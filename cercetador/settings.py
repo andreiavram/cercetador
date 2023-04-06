@@ -147,7 +147,7 @@ REST_FRAMEWORK = {
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (46.769441, 23.588906),
-    'DEFAULT_ZOOM': 14,
+    'DEFAULT_ZOOM': 15,
 }
 
 BASE_URL = os.environ.get("BASE_URL", "http://127.0.0.1:8000")
