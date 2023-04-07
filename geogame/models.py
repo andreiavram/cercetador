@@ -46,19 +46,19 @@ class Zone(models.Model):
         TeamZoneOwnership.objects.create(zone=self, team=team, timestamp_start=handover_time)
 
     def _get_score_exp(self, seconds):
-        mins = seconds / 60.
+        mins = seconds / 300.
         return math.pow(mins, 2) / 140 + 10
 
     def _get_score_exp_bonus(self, seconds):
-        mins = seconds / 60.
+        mins = seconds / 300.
         return min(math.pow(mins, 2) / 25 + 50, 200)
 
     def _get_score_log(self, seconds):
-        mins = seconds / 60.
+        mins = seconds / 300.
         return 30 * math.log(mins) + pow(mins, 2) / 10000
 
     def _get_score_prop(self, seconds):
-        mins = seconds / 60.
+        mins = seconds / 300.
         return mins
 
     def get_score(self, seconds):
