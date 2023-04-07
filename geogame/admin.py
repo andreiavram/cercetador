@@ -89,7 +89,7 @@ class ChallengeAdmin(admin.ModelAdmin):
 class TeamTowerChallangeAdmin(admin.ModelAdmin):
     list_filter = ['checked_by', 'outcome', 'team']
     list_display = ['id', 'team', 'tower', 'challenge_text', 'checked_by', 'timestamp_submitted', 'timestamp_verified', 'time_diff', 'outcome']
-    readonly_fields = ['response_text', 'photo', 'timestamp_verified', 'team', 'challenge', 'tower']
+    readonly_fields = ['response_text', 'photo', 'timestamp_verified'] #, 'team', 'challenge', 'tower']
 
     def challenge_text(self, obj):
         if obj.challenge:
